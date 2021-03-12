@@ -6,8 +6,11 @@ import threading
 from selenium import webdriver
 
 def get_new_items():
-    driver.get(url)
-
+    driver.refresh()
+    try:
+        driver.find_element_by_css_selector('#block-freitag-content > article > section:nth-child(2) > div > div > div > div > div > div > div > div > a > div > span').click()
+    except:
+        pass
     new_items = []
     for item in driver.find_elements_by_css_selector('#block-freitag-content > article > section:nth-child(2) > div > div > div > div > div > div > div > div > div > div.flex.flex-wrap > div:nth-child(n) > div > img'):
         image_src = item.get_attribute('src')
@@ -21,7 +24,7 @@ def send_api(lists):
     url = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
 
     headers = {
-        "Authorization": "Bearer " +  "your code"
+        "Authorization": "Bearer " +  "temp"
     }
 
     lists = [{"title": '가방', 
@@ -77,6 +80,10 @@ def call():
 if __name__ == "__main__":
     driver = webdriver.Chrome('./chromedriver')
     url = 'https://www.freitag.ch/en/f14'
+    driver.get(url)
+    driver.find_element_by_css_selector('body > div:nth-child(6) > div > div > div:nth-child(3) > a').click()
+
+
     curr_items = []
     call()
 
